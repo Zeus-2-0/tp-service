@@ -1,5 +1,5 @@
 # Trading Partner Service
-[![CircleCI](https://circleci.com/gh/Zeus-2-0/trading-partner-service/tree/master.svg?style=svg)](https://circleci.com/gh/Zeus-2-0/trading-partner-service/tree/master)
+[![CircleCI](https://circleci.com/gh/Zeus-2-0/tp-service/tree/master.svg?style=svg)](https://circleci.com/gh/Zeus-2-0/tp-service/tree/master)
 
 ## Service Highlights
 * Connects to local MySQL when ran in local
