@@ -1,11 +1,56 @@
 openapi: 3.0.1
 info:
-  title: OpenAPI definition
-  version: v0
+  title: Zeus Trading Partner API
+  contact:
+    name: Balaji Varadharajan
+    url: http://www.zeus.com
+    email: vbalaji215@outlook.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/License-2.0.html
+  version: 1.0.0
 servers:
 - url: http://localhost:8081
-  description: Generated server url
+  description: Development Server
 paths:
+  /api/v1/tp/{tradingPartnerSK}:
+    put:
+      tags:
+      - trading-partner
+      description: Update a new trading partner
+      operationId: updateTradingPartner
+      parameters:
+      - name: tradingPartnerSK
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TradingPartnerDto'
+        required: true
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiExceptionList'
+        "201":
+          description: Successfully created the trading partner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradingPartnerDto'
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiExceptionList'
   /api/v1/tp:
     get:
       tags:
@@ -19,10 +64,185 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TradingPartnerRequest'
+    post:
+      tags:
+      - trading-partner
+      description: Create a new trading partner
+      operationId: createTradingPartner
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TradingPartnerDto'
+        required: true
+      responses:
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiExceptionList'
+        "201":
+          description: Successfully created the trading partner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradingPartnerDto'
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiExceptionList'
+  /api/v1/tp/{tradingPartnerId}:
+    get:
+      tags:
+      - trading-partner
+      description: Get the trading partner by trading partner id
+      operationId: getTradingPartnerById
+      parameters:
+      - name: tradingPartnerId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully retrieved the trading partner
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradingPartnerDto'
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiExceptionList'
+  /api/v1/tp/sort:
+    get:
+      tags:
+      - trading-partner
+      description: Get trading partners sorted and option use pagination
+      operationId: getAllSortedTradingPartners
+      parameters:
+      - name: page
+        in: query
+        description: Page number requested
+        required: false
+        schema:
+          type: string
+          default: "0"
+      - name: pageSize
+        in: query
+        description: Page size for the page
+        required: false
+        schema:
+          type: string
+          default: "5"
+      - name: sortBy
+        in: query
+        description: Sorting column
+        required: false
+        schema:
+          type: string
+          default: tradingPartnerId
+      responses:
+        "200":
+          description: Successfully retrieved all trading partners
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradingPartnerList'
 components:
   schemas:
+    TradingPartnerDto:
+      required:
+      - lineOfBusinessTypeCode
+      - marketplaceTypeCode
+      - name
+      - receiverId
+      - senderId
+      - stateTypeCode
+      - tradingPartnerId
+      type: object
+      properties:
+        tradingPartnerSK:
+          type: string
+          description: Trading Partner SK - This is a UUID value
+          format: uuid
+          readOnly: true
+          example: 657cfd75-634e-49f1-9556-4d79f79848ec
+        tradingPartnerId:
+          maxLength: 100
+          minLength: 2
+          type: string
+          description: Trading Partner ID
+          example: 683234GHD42
+        name:
+          maxLength: 100
+          minLength: 2
+          type: string
+          description: Trading Partner Name
+          example: FL FFM
+        description:
+          type: string
+          description: A short description of the trading partner
+          example: FL State FFM TP
+        senderId:
+          maxLength: 100
+          minLength: 2
+          type: string
+          description: Sender Id configured for the TP
+          example: CMSFFM
+        receiverId:
+          maxLength: 100
+          minLength: 2
+          type: string
+          description: Receiver Id configured for the TP
+          example: "96633"
+        lineOfBusinessTypeCode:
+          maxLength: 100
+          minLength: 2
+          type: string
+          description: LOB associated with the trading partner
+          example: HIX
+        marketplaceTypeCode:
+          maxLength: 10
+          minLength: 2
+          type: string
+          description: Marketplace Type Code of the trading partner
+          example: FFM
+        stateTypeCode:
+          maxLength: 2
+          minLength: 2
+          type: string
+          description: State of the trading partner
+          example: FL
+      description: Trading Partner Object
+    ApiException:
+      type: object
+      properties:
+        exceptionCode:
+          type: string
+        exceptionMessage:
+          type: string
+    ApiExceptionList:
+      type: object
+      properties:
+        exceptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiException'
     TradingPartnerRequest:
       type: object
       properties:
         tradingPartnerRequest:
           type: string
+    TradingPartnerList:
+      type: object
+      properties:
+        tradingPartnerDtos:
+          type: array
+          items:
+            $ref: '#/components/schemas/TradingPartnerDto'
