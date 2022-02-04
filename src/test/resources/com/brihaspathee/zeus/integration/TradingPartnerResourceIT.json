@@ -1,0 +1,179 @@
+{
+  "testClassName": "TradingPartnerResourceIT",
+  "testMethods": [
+    {
+      "testMethodName": "testGetAllTradingPartners",
+      "testData": [
+        {
+          "testData": {
+            "exceptionExpected": false,
+            "httpStatusCode": "200",
+            "userDto": {
+              "username": "john",
+              "password": "password"
+            },
+            "tradingPartnerListResponse": {
+              "tradingPartnerDtos": [
+                {
+                  "tradingPartnerSK": "15cc9dbb-73e8-473e-9f6b-e772a781e6dc",
+                  "tradingPartnerId": "060641618A",
+                  "name": "FFM AR TP",
+                  "description": "Arkansas FFM Trading Partner",
+                  "senderId": "CMSFFM",
+                  "receiverId": "060641618A",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "FFM",
+                  "stateTypeCode": "AR"
+                },
+                {
+                  "tradingPartnerSK": "de452af8-b789-47c5-b517-39cbe2ae083c",
+                  "tradingPartnerId": "TP011643",
+                  "name": "SBE AR TP",
+                  "description": "Arkansas SBE Trading Partner",
+                  "senderId": "716007869",
+                  "receiverId": "TP011643",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "SBE",
+                  "stateTypeCode": "AR"
+                },
+                {
+                  "tradingPartnerSK": "0375a5fa-db10-4704-97b8-1cebe43c2c9a",
+                  "tradingPartnerId": "363097810",
+                  "name": "FFM AZ TP",
+                  "description": "Arizona FFM Trading Partner",
+                  "senderId": "CMSFFM",
+                  "receiverId": "363097810",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "FFM",
+                  "stateTypeCode": "AZ"
+                },
+                {
+                  "tradingPartnerSK": "a85b80c4-e7c8-4250-aab1-30aa9e532af0",
+                  "tradingPartnerId": "91450",
+                  "name": "OFFX AZ TP",
+                  "description": "Arizona OFFX Trading Partner",
+                  "senderId": "AZOFFX",
+                  "receiverId": "91450",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "OFFX",
+                  "stateTypeCode": "AZ"
+                },
+                {
+                  "tradingPartnerSK": "2b937843-e6d3-4d1d-809c-148b95beda93",
+                  "tradingPartnerId": "954402957052",
+                  "name": "SBE CA TP",
+                  "description": "California SBE Trading Partner",
+                  "senderId": "CA0",
+                  "receiverId": "954402957052",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "SBE",
+                  "stateTypeCode": "CA"
+                },
+                {
+                  "tradingPartnerSK": "152b4196-1cb1-433a-b3ff-ea4d567a1788",
+                  "tradingPartnerId": "954402957063",
+                  "name": "SBE CA TP",
+                  "description": "California SBE Trading Partner",
+                  "senderId": "CA0",
+                  "receiverId": "954402957063",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "SBE",
+                  "stateTypeCode": "CA"
+                },
+                {
+                  "tradingPartnerSK": "5c985138-8921-4661-8992-05d9d4ab0ca5",
+                  "tradingPartnerId": "730654885040",
+                  "name": "SBE CA TP",
+                  "description": "California SBE Trading Partner",
+                  "senderId": "CA0",
+                  "receiverId": "730654885040",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "SBE",
+                  "stateTypeCode": "CA"
+                },
+                {
+                  "tradingPartnerSK": "81c1bbcc-1ffc-4554-ae56-50f721aed469",
+                  "tradingPartnerId": "730654885034",
+                  "name": "SBE CA TP",
+                  "description": "California SBE Trading Partner",
+                  "senderId": "CA0",
+                  "receiverId": "730654885034",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "SBE",
+                  "stateTypeCode": "CA"
+                },
+                {
+                  "tradingPartnerSK": "fd981496-6db2-497d-8944-a780b758a00c",
+                  "tradingPartnerId": "67138052",
+                  "name": "OFFX CA TP",
+                  "description": "California OFFX Trading Partner",
+                  "senderId": "CAOFFX",
+                  "receiverId": "67138052",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "OFFX",
+                  "stateTypeCode": "CA"
+                },
+                {
+                  "tradingPartnerSK": "96f76431-49ea-41e6-bac9-b08dca355b57",
+                  "tradingPartnerId": "67138063",
+                  "name": "OFFX CA TP",
+                  "description": "California OFFX Trading Partner",
+                  "senderId": "CAOFFX",
+                  "receiverId": "67138063",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "OFFX",
+                  "stateTypeCode": "CA"
+                },
+                {
+                  "tradingPartnerSK": "e2c4ff60-48ec-4105-abe2-0b6852e60ec2",
+                  "tradingPartnerId": "99110040",
+                  "name": "OFFX CA TP",
+                  "description": "California OFFX Trading Partner",
+                  "senderId": "CAOFFX",
+                  "receiverId": "99110040",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "OFFX",
+                  "stateTypeCode": "CA"
+                },
+                {
+                  "tradingPartnerSK": "f3dee461-7e07-4bfc-839b-68ad813d0ef2",
+                  "tradingPartnerId": "99110034",
+                  "name": "OFFX CA TP",
+                  "description": "California OFFX Trading Partner",
+                  "senderId": "CAOFFX",
+                  "receiverId": "99110034",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "OFFX",
+                  "stateTypeCode": "CA"
+                },
+                {
+                  "tradingPartnerSK": "6a7bd316-ca78-4c9e-b466-d27d31c04db9",
+                  "tradingPartnerId": "21663",
+                  "name": "FFM FL TP",
+                  "description": "Florida FFM Trading Partner",
+                  "senderId": "CMSFFM",
+                  "receiverId": "21663",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "FFM",
+                  "stateTypeCode": "FL"
+                },
+                {
+                  "tradingPartnerSK": "abb5a90e-57e6-4520-98c3-73057bd29a05",
+                  "tradingPartnerId": "70893",
+                  "name": "FFM GA TP",
+                  "description": "Georgia FFM Trading Partner",
+                  "senderId": "CMSFFM",
+                  "receiverId": "70893",
+                  "lineOfBusinessTypeCode": "HIX",
+                  "marketplaceTypeCode": "FFM",
+                  "stateTypeCode": "GA"
+                }
+              ]
+            }
+
+          }
+        }
+      ]
+    }
+  ]
+}
