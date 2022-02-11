@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,6 +27,15 @@ import java.util.List;
 @Slf4j
 @ControllerAdvice
 public class ApiErrorHandler {
+
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiExceptionList> handleBadCredentialsException(BadCredentialsException exception){
+        log.info("Inside the no trading partner not found exception handler");
+        //ApiExceptionList exceptionList = getApiExceptionList(exception, "110001");
+        //return new ResponseEntity<>(exceptionList, HttpStatus.NOT_FOUND);
+        return null;
+    }
 
     @ExceptionHandler(TradingPartnerNotFoundException.class)
     public ResponseEntity<ApiExceptionList> handleTPNotFoundException(TradingPartnerNotFoundException exception){

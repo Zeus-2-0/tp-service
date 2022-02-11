@@ -110,8 +110,8 @@ public interface TradingPartnerApi {
                     })
     })
     @TradingPartnerCreatePermission
-    @PostMapping
-    ResponseEntity createTradingPartner(@RequestBody @Valid TradingPartnerDto tradingPartnerDto);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<ZeusApiResponse<TradingPartnerDto>> createTradingPartner(@RequestBody @Valid TradingPartnerDto tradingPartnerDto);
 
     /**
      *
@@ -126,7 +126,7 @@ public interface TradingPartnerApi {
     )
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
-                    description = "Successfully created the trading partner",
+                    description = "Successfully updated the trading partner",
                     content = {
                             @Content(mediaType = "application/json",schema = @Schema(implementation = TradingPartnerDto.class))
                     }),
@@ -143,7 +143,7 @@ public interface TradingPartnerApi {
     })
     @TradingPartnerUpdatePermission
     @PutMapping("/{tradingPartnerSK}")
-    ResponseEntity updateTradingPartner(@RequestBody @Valid TradingPartnerDto tradingPartnerDto, @PathVariable("tradingPartnerSK")UUID tradingPartnerSK);
+    ResponseEntity<ZeusApiResponse<TradingPartnerDto>> updateTradingPartner(@RequestBody @Valid TradingPartnerDto tradingPartnerDto, @PathVariable("tradingPartnerSK")UUID tradingPartnerSK);
 
     /**
      *

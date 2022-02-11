@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -65,21 +66,47 @@ public class TradingPartnerResource implements TradingPartnerApi {
     }
 
     @Override
-    public ResponseEntity createTradingPartner(TradingPartnerDto tradingPartnerDto) {
-        TradingPartnerDto savedTP = tradingPartnerService.savingTradingPartner(tradingPartnerDto);
+    public ResponseEntity<ZeusApiResponse<TradingPartnerDto>> createTradingPartner(TradingPartnerDto tradingPartnerDto) {
+        log.info("Inside the controller to create trading partner");
+
+        ZeusApiResponse<TradingPartnerDto> apiResponse = saveTradingPartner(tradingPartnerDto);
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Location", "/api/v1/tp/"+savedTP.getTradingPartnerSK());
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+        httpHeaders.add("Location", "/api/v1/tp/"+apiResponse.getResponse().getTradingPartnerSK());
+        return new ResponseEntity<ZeusApiResponse<TradingPartnerDto>>(apiResponse, httpHeaders, HttpStatus.CREATED);
+        //return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity updateTradingPartner(TradingPartnerDto tradingPartnerDto, UUID tradingPartnerSK) {
-        return null;
+        tradingPartnerDto.setTradingPartnerSK(tradingPartnerSK);
+        ZeusApiResponse<TradingPartnerDto> apiResponse = saveTradingPartner(tradingPartnerDto);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Location", "/api/v1/tp/"+apiResponse.getResponse().getTradingPartnerSK());
+        return new ResponseEntity<ZeusApiResponse<TradingPartnerDto>>(apiResponse, httpHeaders, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<ZeusApiResponse<TradingPartnerDto>> getTradingPartnerById(String tradingPartnerId) {
-        return null;
+        TradingPartnerDto tradingPartnerDto = tradingPartnerService.getTradingPartnerById(tradingPartnerId);
+        ZeusApiResponse<TradingPartnerDto> apiResponse = ZeusApiResponse.<TradingPartnerDto>builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.OK)
+                .reason(ApiResponseConstants.SUCCESS_REASON)
+                .message(ApiResponseConstants.SUCCESS)
+                .response(tradingPartnerDto)
+                .build();
+        return ResponseEntity.ok(apiResponse);
+    }
+
+    private ZeusApiResponse<TradingPartnerDto> saveTradingPartner(TradingPartnerDto tradingPartnerDto){
+        TradingPartnerDto savedTP = tradingPartnerService.savingTradingPartner(tradingPartnerDto);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Location", "/api/v1/tp/"+savedTP.getTradingPartnerSK());
+        ZeusApiResponse<TradingPartnerDto> apiResponse = ZeusApiResponse.<TradingPartnerDto>builder()
+                .response(savedTP)
+                .message(ApiResponseConstants.SUCCESS)
+                .build();
+        return apiResponse;
     }
 
 
