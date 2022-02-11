@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -101,5 +102,18 @@ public class TradingPartnerDto {
                 ", marketplaceTypeCode='" + marketplaceTypeCode + '\'' +
                 ", stateTypeCode='" + stateTypeCode + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TradingPartnerDto that = (TradingPartnerDto) o;
+        return tradingPartnerSK.equals(that.tradingPartnerSK);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tradingPartnerSK);
     }
 }

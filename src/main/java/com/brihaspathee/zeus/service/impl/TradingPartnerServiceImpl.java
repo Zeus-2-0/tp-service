@@ -3,6 +3,7 @@ package com.brihaspathee.zeus.service.impl;
 import com.brihaspathee.zeus.domain.entity.TradingPartner;
 import com.brihaspathee.zeus.exception.TradingPartnerNotFoundException;
 import com.brihaspathee.zeus.mapper.interfaces.TradingPartnerMapper;
+import com.brihaspathee.zeus.service.interfaces.ReferenceDataService;
 import com.brihaspathee.zeus.web.response.InternalRefDataResponseList;
 import com.brihaspathee.zeus.web.response.ZeusApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,16 +40,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TradingPartnerServiceImpl implements TradingPartnerService {
 
-    @Value("${url.host.ref-data}")
-    private String refDataHost;
 
     private final TradingPartnerRepository tradingPartnerRepository;
 
     private final TradingPartnerMapper tradingPartnerMapper;
 
-    private final RestTemplate restTemplate;
+    private final ReferenceDataService referenceDataService;
 
-    private final ObjectMapper objectMapper;
 
     @Override
     public TradingPartnerList getAllTradingPartners() {
@@ -66,9 +64,13 @@ public class TradingPartnerServiceImpl implements TradingPartnerService {
 
     @Override
     public TradingPartnerDto savingTradingPartner(TradingPartnerDto tradingPartnerDto) {
-        log.info("Ref-data host: {}", refDataHost );
         validateReferenceData(tradingPartnerDto);
         TradingPartner tradingPartner = tradingPartnerMapper.tradingPartnerDtoToTradingPartner(tradingPartnerDto);
+        if(tradingPartnerDto.getTradingPartnerSK()!=null){
+            TradingPartner currentTP = tradingPartnerRepository.getById(tradingPartnerDto.getTradingPartnerSK());
+            tradingPartner.setCreatedDate(currentTP.getCreatedDate());
+        }
+
         tradingPartner = tradingPartnerRepository.save(tradingPartner);
         return tradingPartnerMapper.tradingPartnerToTradingPartnerDto(tradingPartner);
     }
@@ -102,8 +104,6 @@ public class TradingPartnerServiceImpl implements TradingPartnerService {
 
     private void validateReferenceData(TradingPartnerDto tradingPartnerDto) {
         log.info("Inside Validate Reference data:{}", tradingPartnerDto);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
         InternalRefDataRequestList internalRefDataRequestList = InternalRefDataRequestList.builder()
                 .internalRefDataRequestList(List.of(InternalRefDataRequest.builder()
                                 .internalListTypeName("LineOfBusiness")
@@ -118,14 +118,7 @@ public class TradingPartnerServiceImpl implements TradingPartnerService {
                                 .internalListCode(tradingPartnerDto.getStateTypeCode())
                                 .build()))
                 .build();
-
-        HttpEntity httpEntity = new HttpEntity(internalRefDataRequestList, headers);
-        ZeusApiResponse apiResponse = restTemplate.postForObject(refDataHost+"internal/refdata/list",httpEntity, ZeusApiResponse.class);
-        log.info("API Response:{}", apiResponse);
-        if (apiResponse.getMessage().equals("Success")){
-            InternalRefDataResponseList responseList = objectMapper.convertValue(apiResponse.getResponse(), InternalRefDataResponseList.class);
-            log.info("Internal Ref Data Response:{}", responseList);
-        }
+        referenceDataService.lookupReferenceData(internalRefDataRequestList);
 
     }
 }

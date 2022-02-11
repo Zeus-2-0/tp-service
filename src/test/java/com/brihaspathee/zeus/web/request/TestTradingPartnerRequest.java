@@ -30,6 +30,8 @@ public class TestTradingPartnerRequest {
 
     private String httpStatusCode;
 
+    private boolean authException;
+
     private UserDto userDto;
 
     private TradingPartnerDto tradingPartnerDto;

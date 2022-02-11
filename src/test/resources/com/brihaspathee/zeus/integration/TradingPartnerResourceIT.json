@@ -172,6 +172,220 @@
             }
 
           }
+        },
+        {
+          "testData": {
+            "exceptionExpected": true,
+            "httpStatusCode": "401",
+            "authException": true,
+            "exceptionMessage": "401 UNAUTHORIZED",
+            "userDto": {
+              "username": "john",
+              "password": "test"
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": true,
+            "httpStatusCode": "401",
+            "authException": true,
+            "exceptionMessage": "401 UNAUTHORIZED",
+            "userDto": {
+              "username": "unauthorized",
+              "password": "password"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "testMethodName": "testCreateTradingPartner",
+      "testData": [
+        {
+          "testData": {
+            "exceptionExpected": false,
+            "httpStatusCode": "201",
+            "userDto": {
+              "username": "john",
+              "password": "password"
+            },
+            "tradingPartnerDto": {
+              "tradingPartnerId": "52345321",
+              "name": "FFM IL TP",
+              "description": "Illinois FFM Trading Partner",
+              "senderId": "CMSFFM",
+              "receiverId": "52345321",
+              "lineOfBusinessTypeCode": "HIX",
+              "marketplaceTypeCode": "FFM",
+              "stateTypeCode": "IL"
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": false,
+            "httpStatusCode": "201",
+            "userDto": {
+              "username": "cindy",
+              "password": "password"
+            },
+            "tradingPartnerDto": {
+              "tradingPartnerId": "3456346",
+              "name": "FFM NY TP",
+              "description": "New York FFM Trading Partner",
+              "senderId": "CMSFFM",
+              "receiverId": "3456346",
+              "lineOfBusinessTypeCode": "HIX",
+              "marketplaceTypeCode": "FFM",
+              "stateTypeCode": "NY"
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": true,
+            "httpStatusCode": "401",
+            "authException": true,
+            "exceptionMessage": "401 UNAUTHORIZED",
+            "userDto": {
+              "username": "unauthorized",
+              "password": "password"
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": true,
+            "httpStatusCode": "403",
+            "authException": true,
+            "exceptionMessage": "403 FORBIDDEN",
+            "userDto": {
+              "username": "ref-data",
+              "password": "password"
+            },
+            "tradingPartnerDto": {
+              "tradingPartnerId": "3456346",
+              "name": "FFM NY TP",
+              "description": "New York FFM Trading Partner",
+              "senderId": "CMSFFM",
+              "receiverId": "3456346",
+              "lineOfBusinessTypeCode": "HIX",
+              "marketplaceTypeCode": "FFM",
+              "stateTypeCode": "NY"
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": true,
+            "httpStatusCode": "403",
+            "authException": true,
+            "exceptionMessage": "403 FORBIDDEN",
+            "userDto": {
+              "username": "mary",
+              "password": "password"
+            },
+            "tradingPartnerDto": {
+              "tradingPartnerId": "3456346",
+              "name": "FFM NY TP",
+              "description": "New York FFM Trading Partner",
+              "senderId": "CMSFFM",
+              "receiverId": "3456346",
+              "lineOfBusinessTypeCode": "HIX",
+              "marketplaceTypeCode": "FFM",
+              "stateTypeCode": "NY"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "testMethodName": "testGetTradingPartnerById",
+      "testData": [
+        {
+          "testData": {
+            "exceptionExpected": false,
+            "httpStatusCode": "200",
+            "userDto": {
+              "username": "john",
+              "password": "password"
+            },
+            "tradingPartnerDto": {
+              "tradingPartnerId": "21663"
+            },
+            "tradingPartnerDtoResponse": {
+              "tradingPartnerId": "21663",
+              "name": "FFM FL TP",
+              "description": "Florida FFM Trading Partner",
+              "senderId": "CMSFFM",
+              "receiverId": "21663",
+              "lineOfBusinessTypeCode": "HIX",
+              "marketplaceTypeCode": "FFM",
+              "stateTypeCode": "FL"
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": false,
+            "httpStatusCode": "200",
+            "userDto": {
+              "username": "cindy",
+              "password": "password"
+            },
+            "tradingPartnerDto": {
+              "tradingPartnerId": "21663"
+            },
+            "tradingPartnerDtoResponse": {
+              "tradingPartnerId": "21663",
+              "name": "FFM FL TP",
+              "description": "Florida FFM Trading Partner",
+              "senderId": "CMSFFM",
+              "receiverId": "21663",
+              "lineOfBusinessTypeCode": "HIX",
+              "marketplaceTypeCode": "FFM",
+              "stateTypeCode": "FL"
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": true,
+            "httpStatusCode": "401",
+            "authException": true,
+            "exceptionMessage": "401 UNAUTHORIZED",
+            "userDto": {
+              "username": "unauthorized",
+              "password": "password"
+            },
+            "tradingPartnerDto": {
+              "tradingPartnerId": "21663"
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": false,
+            "httpStatusCode": "200",
+            "userDto": {
+              "username": "ref-data",
+              "password": "password"
+            },
+            "tradingPartnerDto": {
+              "tradingPartnerId": "21663"
+            },
+            "tradingPartnerDtoResponse": {
+              "tradingPartnerId": "21663",
+              "name": "FFM FL TP",
+              "description": "Florida FFM Trading Partner",
+              "senderId": "CMSFFM",
+              "receiverId": "21663",
+              "lineOfBusinessTypeCode": "HIX",
+              "marketplaceTypeCode": "FFM",
+              "stateTypeCode": "FL"
+            }
+          }
         }
       ]
     }
