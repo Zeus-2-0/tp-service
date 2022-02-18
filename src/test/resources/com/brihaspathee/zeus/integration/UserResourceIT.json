@@ -1,0 +1,126 @@
+{
+  "testClassName": "UserResourceIT",
+  "testMethods": [
+    {
+      "testMethodName": "testGetUsers",
+      "testData": [
+        {
+          "testData": {
+            "exceptionExpected": false,
+            "httpStatusCode": "200",
+            "loggedInUser": {
+              "username": "john",
+              "password": "password"
+            },
+            "userDtoRequest": {
+              "userId": "ac5f043b-67b0-4878-8819-5d47ed8dad29"
+            },
+            "expectedUserList": {
+              "users": [
+                {
+                  "userId": "ac5f043b-67b0-4878-8819-5d47ed8dad29",
+                  "username": "mary",
+                  "password": "password"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": false,
+            "httpStatusCode": "200",
+            "loggedInUser": {
+              "username": "john",
+              "password": "password"
+            },
+            "userDtoRequest": {
+              "username": "mary"
+            },
+            "expectedUserList": {
+              "users": [
+                {
+                  "userId": "ac5f043b-67b0-4878-8819-5d47ed8dad29",
+                  "username": "mary",
+                  "password": "password"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": false,
+            "httpStatusCode": "200",
+            "loggedInUser": {
+              "username": "john",
+              "password": "password"
+            },
+            "userDtoRequest": {
+            },
+            "expectedUserList": {
+              "users": [
+                {
+                  "userId": "49d18e1a-1018-4961-a261-2873ffe5bd02",
+                  "username": "ref-data",
+                  "password": "password"
+                },
+                {
+                  "userId": "ac5f043b-67b0-4878-8819-5d47ed8dad29",
+                  "username": "mary",
+                  "password": "password"
+                },
+                {
+                  "userId": "3375d2ab-5b0f-4da2-a26b-abf7354086f4",
+                  "username": "john",
+                  "password": "password"
+                },
+                {
+                  "userId": "cabcab65-a744-4e09-a727-ba686d20127c",
+                  "username": "cindy",
+                  "password": "password"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": true,
+            "httpStatusCode": "403",
+            "authException": true,
+            "exceptionMessage": "403 FORBIDDEN",
+            "loggedInUser": {
+              "username": "mary",
+              "password": "password"
+            },
+            "userDtoRequest": {
+              "username": "mary"
+            },
+            "expectedUserList": {
+              "users": []
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": true,
+            "httpStatusCode": "401",
+            "authException": true,
+            "exceptionMessage": "401 UNAUTHORIZED",
+            "loggedInUser": {
+              "username": "unauthorized",
+              "password": "password"
+            },
+            "userDtoRequest": {
+              "username": "mary"
+            },
+            "expectedUserList": {
+              "users": []
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
