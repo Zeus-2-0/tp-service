@@ -48,7 +48,7 @@ public interface AuthorityApi {
     @GetMapping
     @AuthorityReadPermission
     public ResponseEntity<ZeusApiResponse<AuthorityList>> getAuthorities(@RequestParam(required = false) UUID authorityId,
-                                                                   @RequestParam(required = false) String authorityName);
+                                                                   @RequestParam(required = false) String permission);
 
     @Operation(
             method = "POST",
