@@ -2,6 +2,7 @@ package com.brihaspathee.zeus.exception;
 
 import com.brihaspathee.zeus.web.response.ApiException;
 import com.brihaspathee.zeus.web.response.ApiExceptionList;
+import com.networknt.schema.ValidationMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created in Intellij IDEA
@@ -28,6 +30,25 @@ import java.util.List;
 @ControllerAdvice
 public class ApiErrorHandler {
 
+
+    @ExceptionHandler(ZeusApiValidationException.class)
+    public ResponseEntity<ApiExceptionList> handleApiValidationExceptions(ZeusApiValidationException exception){
+        log.info("Inside the no trading partner not found exception handler");
+        Set<ValidationMessage> validationMessageSet = exception.getValidationMessages();
+        if(validationMessageSet.size() > 0){
+
+            List<ApiException> errors = new ArrayList<>();
+            for (ValidationMessage validationMessage: validationMessageSet){
+                ApiException apiException = ApiException.builder()
+                        .exceptionMessage(validationMessage.toString())
+                        .build();
+                errors.add(apiException);
+            }
+            ApiExceptionList apiExceptionList = ApiExceptionList.builder().exceptions(errors).build();
+            return new ResponseEntity<>(apiExceptionList, HttpStatus.BAD_REQUEST);
+        }
+        return null;
+    }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ApiExceptionList> handleBadCredentialsException(BadCredentialsException exception){

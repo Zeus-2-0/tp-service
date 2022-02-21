@@ -1,12 +1,19 @@
 package com.brihaspathee.zeus.web.resource.impl;
 
 import com.brihaspathee.zeus.constants.ApiResponseConstants;
+import com.brihaspathee.zeus.exception.ZeusApiValidationException;
 import com.brihaspathee.zeus.service.interfaces.TradingPartnerService;
 import com.brihaspathee.zeus.web.model.TradingPartnerDto;
 import com.brihaspathee.zeus.web.model.TradingPartnerList;
 import com.brihaspathee.zeus.web.resource.interfaces.TradingPartnerApi;
-import com.brihaspathee.zeus.web.response.InternalRefDataResponse;
 import com.brihaspathee.zeus.web.response.ZeusApiResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.networknt.schema.JsonSchema;
+import com.networknt.schema.JsonSchemaFactory;
+import com.networknt.schema.SpecVersion;
+import com.networknt.schema.ValidationMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -16,8 +23,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -35,6 +44,8 @@ import java.util.UUID;
 public class TradingPartnerResource implements TradingPartnerApi {
 
     private final TradingPartnerService tradingPartnerService;
+
+    private final ObjectMapper objectMapper;
 
     @Override
     public ResponseEntity<ZeusApiResponse<TradingPartnerList>> getAllTradingPartners() {
@@ -66,14 +77,32 @@ public class TradingPartnerResource implements TradingPartnerApi {
     }
 
     @Override
-    public ResponseEntity<ZeusApiResponse<TradingPartnerDto>> createTradingPartner(TradingPartnerDto tradingPartnerDto) {
+    public ResponseEntity<ZeusApiResponse<TradingPartnerDto>> createTradingPartner(TradingPartnerDto tradingPartnerDto) throws JsonProcessingException {
         log.info("Inside the controller to create trading partner");
+
+        validateJSON(tradingPartnerDto);
 
         ZeusApiResponse<TradingPartnerDto> apiResponse = saveTradingPartner(tradingPartnerDto);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Location", "/api/v1/tp/"+apiResponse.getResponse().getTradingPartnerSK());
         return new ResponseEntity<ZeusApiResponse<TradingPartnerDto>>(apiResponse, httpHeaders, HttpStatus.CREATED);
         //return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+    }
+
+    private void validateJSON(TradingPartnerDto tradingPartnerDto) throws JsonProcessingException {
+        String requestString = objectMapper.writeValueAsString(tradingPartnerDto);
+        InputStream schemaAsStream = TradingPartnerResource.class.getClassLoader().getResourceAsStream("model/tradingPartner.schema.json");
+        JsonSchema schema = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V201909).getSchema(schemaAsStream);
+        JsonNode jsonNode = objectMapper.readTree(requestString);
+        Set<ValidationMessage> errors = schema.validate(jsonNode);
+        String errorsCombined = "";
+        for(ValidationMessage validationMessage : errors){
+            log.error("Validation Error:{}", validationMessage);
+            errorsCombined += validationMessage.toString() + "\n";
+        }
+        if(errors.size() > 0){
+            throw new ZeusApiValidationException(errors);
+        }
     }
 
     @Override
