@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema#",
+  "$id": "https://www.codeinvestigator.com/spaceshiprequest.schema.json",
+  "title": "Trading Partner",
+  "type": "object",
+  "properties": {
+    "tradingPartnerSK": {
+      "type": ["string","null"],
+      "format": "uuid"
+    },
+    "tradingPartnerId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": ["string","null"]
+    },
+    "senderId": {
+      "type": "string"
+    },
+    "receiverId": {
+      "type": "string"
+    },
+    "lineOfBusinessTypeCode": {
+      "type": "string"
+    },
+    "marketplaceTypeCode": {
+      "type": "string"
+    },
+    "stateTypeCode": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "tradingPartnerId",
+    "name",
+    "senderId",
+    "receiverId",
+    "lineOfBusinessTypeCode",
+    "marketplaceTypeCode",
+    "stateTypeCode"
+  ]
+}

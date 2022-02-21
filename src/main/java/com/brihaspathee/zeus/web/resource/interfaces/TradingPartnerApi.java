@@ -7,6 +7,7 @@ import com.brihaspathee.zeus.permissions.TradingPartnerUpdatePermission;
 import com.brihaspathee.zeus.web.model.TradingPartnerDto;
 import com.brihaspathee.zeus.web.model.TradingPartnerList;
 import com.brihaspathee.zeus.web.response.ZeusApiResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -111,7 +112,7 @@ public interface TradingPartnerApi {
     })
     @TradingPartnerCreatePermission
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<ZeusApiResponse<TradingPartnerDto>> createTradingPartner(@RequestBody @Valid TradingPartnerDto tradingPartnerDto);
+    ResponseEntity<ZeusApiResponse<TradingPartnerDto>> createTradingPartner(@RequestBody @Valid TradingPartnerDto tradingPartnerDto) throws JsonProcessingException;
 
     /**
      *

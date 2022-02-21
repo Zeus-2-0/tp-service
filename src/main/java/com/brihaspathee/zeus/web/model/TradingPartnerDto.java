@@ -38,15 +38,15 @@ public class TradingPartnerDto {
 
     @JsonProperty(required = true)
     @Schema(description = "Trading Partner ID", example = "683234GHD42")
-    @NotNull
-    @NotBlank
+    //@NotNull
+    //@NotBlank
     @Size(min = 2, max = 100)
     private String tradingPartnerId;
 
     @JsonProperty(required = true)
     @Schema(description = "Trading Partner Name", example = "FL FFM")
-    @NotNull
-    @NotBlank
+    //@NotNull
+    //@NotBlank
     @Size(min = 2, max = 100)
     private String name;
 
@@ -56,36 +56,36 @@ public class TradingPartnerDto {
 
     @JsonProperty(required = true)
     @Schema(description = "Sender Id configured for the TP", example = "CMSFFM")
-    @NotNull
-    @NotBlank
+    //@NotNull
+    //@NotBlank
     @Size(min = 2, max = 100)
     private String senderId;
 
     @JsonProperty(required = true)
     @Schema(description = "Receiver Id configured for the TP", example = "96633")
-    @NotNull
-    @NotBlank
+    //@NotNull
+    //@NotBlank
     @Size(min = 2, max = 100)
     private String receiverId;
 
     @JsonProperty(required = true)
     @Schema(description = "LOB associated with the trading partner", example = "HIX")
-    @NotNull
-    @NotBlank
+    //@NotNull
+    //@NotBlank
     @Size(min = 2, max = 100)
     private String lineOfBusinessTypeCode;
 
     @JsonProperty(required = true)
     @Schema(description = "Marketplace Type Code of the trading partner", example = "FFM")
-    @NotNull
-    @NotBlank
+    //@NotNull
+    //@NotBlank
     @Size(min = 2, max = 10)
     private String marketplaceTypeCode;
 
     @JsonProperty(required = true)
     @Schema(description = "State of the trading partner", example = "FL")
-    @NotNull
-    @NotBlank
+    //@NotNull
+    //@NotBlank
     @Size(min = 2, max = 2)
     private String stateTypeCode;
 

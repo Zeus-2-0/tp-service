@@ -3,8 +3,6 @@ package com.brihaspathee.zeus.integration;
 import com.brihaspathee.zeus.test.TestClass;
 import com.brihaspathee.zeus.test.TestData;
 import com.brihaspathee.zeus.test.TestMethod;
-import com.brihaspathee.zeus.web.model.TradingPartnerDto;
-import com.brihaspathee.zeus.web.request.TestTradingPartnerRequest;
 import com.brihaspathee.zeus.web.request.TestUserRequest;
 import com.brihaspathee.zeus.web.response.ZeusApiResponse;
 import com.brihaspathee.zeus.web.security.UserDto;
@@ -22,7 +20,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.io.IOException;
 import java.util.ArrayList;
