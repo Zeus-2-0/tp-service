@@ -2,6 +2,8 @@ package com.brihaspathee.zeus.web.resource.impl;
 
 import com.brihaspathee.zeus.constants.ApiResponseConstants;
 import com.brihaspathee.zeus.exception.ZeusApiValidationException;
+import com.brihaspathee.zeus.schema.validation.JSONSchemaObject;
+import com.brihaspathee.zeus.schema.validation.JSONSchemaValidator;
 import com.brihaspathee.zeus.service.interfaces.TradingPartnerService;
 import com.brihaspathee.zeus.web.model.TradingPartnerDto;
 import com.brihaspathee.zeus.web.model.TradingPartnerList;
@@ -47,6 +49,8 @@ public class TradingPartnerResource implements TradingPartnerApi {
 
     private final ObjectMapper objectMapper;
 
+    private final JSONSchemaValidator jsonSchemaValidator;
+
     @Override
     public ResponseEntity<ZeusApiResponse<TradingPartnerList>> getAllTradingPartners() {
         TradingPartnerList tradingPartnerList = tradingPartnerService.getAllTradingPartners();
@@ -79,8 +83,11 @@ public class TradingPartnerResource implements TradingPartnerApi {
     @Override
     public ResponseEntity<ZeusApiResponse<TradingPartnerDto>> createTradingPartner(TradingPartnerDto tradingPartnerDto) throws JsonProcessingException {
         log.info("Inside the controller to create trading partner");
-
-        validateJSON(tradingPartnerDto);
+        JSONSchemaObject<TradingPartnerDto> schemaObject = new JSONSchemaObject<>();
+        schemaObject.setSchemaObject(tradingPartnerDto);
+        InputStream schemaAsStream = TradingPartnerResource.class.getClassLoader().getResourceAsStream("model/tradingPartner.schema.json");
+        jsonSchemaValidator.validateJSON(schemaObject,schemaAsStream,ApiResponseConstants.TRADING_PARTNER_API);
+        //validateJSON(tradingPartnerDto);
 
         ZeusApiResponse<TradingPartnerDto> apiResponse = saveTradingPartner(tradingPartnerDto);
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -89,21 +96,6 @@ public class TradingPartnerResource implements TradingPartnerApi {
         //return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
     }
 
-    private void validateJSON(TradingPartnerDto tradingPartnerDto) throws JsonProcessingException {
-        String requestString = objectMapper.writeValueAsString(tradingPartnerDto);
-        InputStream schemaAsStream = TradingPartnerResource.class.getClassLoader().getResourceAsStream("model/tradingPartner.schema.json");
-        JsonSchema schema = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V201909).getSchema(schemaAsStream);
-        JsonNode jsonNode = objectMapper.readTree(requestString);
-        Set<ValidationMessage> errors = schema.validate(jsonNode);
-        String errorsCombined = "";
-        for(ValidationMessage validationMessage : errors){
-            log.error("Validation Error:{}", validationMessage);
-            errorsCombined += validationMessage.toString() + "\n";
-        }
-        if(errors.size() > 0){
-            throw new ZeusApiValidationException(errors);
-        }
-    }
 
     @Override
     public ResponseEntity updateTradingPartner(TradingPartnerDto tradingPartnerDto, UUID tradingPartnerSK) {

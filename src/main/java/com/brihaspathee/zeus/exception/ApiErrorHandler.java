@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.validation.ConstraintViolationException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created in Intellij IDEA
@@ -29,7 +27,6 @@ import java.util.Set;
 @Slf4j
 @ControllerAdvice
 public class ApiErrorHandler {
-
 
     @ExceptionHandler(ZeusApiValidationException.class)
     public ResponseEntity<ApiExceptionList> handleApiValidationExceptions(ZeusApiValidationException exception){
