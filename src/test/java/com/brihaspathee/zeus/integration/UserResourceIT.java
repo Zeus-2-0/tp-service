@@ -1,10 +1,15 @@
 package com.brihaspathee.zeus.integration;
 
+import com.brihaspathee.zeus.domain.repository.UserRepository;
+import com.brihaspathee.zeus.domain.security.Role;
+import com.brihaspathee.zeus.service.interfaces.RoleService;
 import com.brihaspathee.zeus.test.TestClass;
 import com.brihaspathee.zeus.test.TestData;
 import com.brihaspathee.zeus.test.TestMethod;
+import com.brihaspathee.zeus.web.model.TradingPartnerDto;
 import com.brihaspathee.zeus.web.request.TestUserRequest;
 import com.brihaspathee.zeus.web.response.ZeusApiResponse;
+import com.brihaspathee.zeus.web.security.RoleDto;
 import com.brihaspathee.zeus.web.security.UserDto;
 import com.brihaspathee.zeus.web.security.UserList;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,7 +24,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +34,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 /**
@@ -48,6 +55,12 @@ public class UserResourceIT {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Value("classpath:com/brihaspathee/zeus/integration/UserResourceIT.json")
     Resource resourceFile;
@@ -87,6 +100,44 @@ public class UserResourceIT {
         TestUserRequest testUserRequest = requests.get(repetitionInfo.getCurrentRepetition()-1);
         validateGetUsers(testUserRequest);
     }
+
+    @RepeatedTest(3)
+    void testCreateUsers(RepetitionInfo repetitionInfo){
+
+        log.info("Current Repetition:{}", repetitionInfo.getCurrentRepetition());
+        TestUserRequest testUserRequest = requests.get(repetitionInfo.getCurrentRepetition()-1);
+        validateCreateUser(testUserRequest);
+    }
+
+    private void validateCreateUser(TestUserRequest testUserRequest) {
+        UserDto inputUser = testUserRequest.getUserDtoRequest();
+        String encryptedPwd = bCryptPasswordEncoder.encode(inputUser.getPassword());
+        inputUser.setPassword(encryptedPwd);
+        UserDto loggedInUser = testUserRequest.getLoggedInUser();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<UserDto> httpEntity = new HttpEntity<>(inputUser, headers);
+        if(!testUserRequest.isExceptionExpected()){
+            ResponseEntity<ZeusApiResponse> responseEntity = testRestTemplate
+                    .withBasicAuth(loggedInUser.getUsername(), loggedInUser.getPassword())
+                    .postForEntity("/api/v1/tp/user",httpEntity, ZeusApiResponse.class);
+            ZeusApiResponse apiResponse = responseEntity.getBody();
+            UserDto savedUser =
+                    objectMapper.convertValue(apiResponse.getResponse(), UserDto.class);
+            log.info("Saved User:{}", savedUser);
+            assertNotNull(savedUser.getUserId());
+            assertEquals(inputUser.getUsername(), savedUser.getUsername());
+            assertNotNull(savedUser.getRoles());
+            userRepository.deleteById(savedUser.getUserId());
+        }else{
+            if(testUserRequest.isAuthException()){
+                ResponseEntity apiResponse =
+                        testRestTemplate.withBasicAuth(loggedInUser.getUsername(), loggedInUser.getPassword()).exchange("/api/v1/tp/user", HttpMethod.POST, httpEntity, Object.class);
+                assertEquals(testUserRequest.getExceptionMessage(), apiResponse.getStatusCode().toString());
+            }
+        }
+    }
+
 
     private void validateGetUsers(TestUserRequest testUserRequest) {
 

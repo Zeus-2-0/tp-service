@@ -121,6 +121,65 @@
           }
         }
       ]
+    },
+    {
+      "testMethodName": "testCreateUsers",
+      "testData": [
+        {
+          "testData": {
+            "exceptionExpected": false,
+            "httpStatusCode": "201",
+            "loggedInUser": {
+              "username": "john",
+              "password": "password"
+            },
+            "userDtoRequest": {
+              "username": "jane",
+              "password": "password",
+              "roles": [
+                {
+                  "roleName": "ADMIN"
+                },
+                {
+                  "roleName": "ENROLLMENT_SPECIALIST"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": true,
+            "httpStatusCode": "401",
+            "authException": true,
+            "exceptionMessage": "401 UNAUTHORIZED",
+            "loggedInUser": {
+              "username": "unauthorized",
+              "password": "password"
+            },
+            "userDtoRequest": {
+              "username": "mary",
+              "password": "password"
+            }
+          }
+        },
+        {
+          "testData": {
+            "exceptionExpected": true,
+            "httpStatusCode": "403",
+            "authException": true,
+            "exceptionMessage": "403 FORBIDDEN",
+            "loggedInUser": {
+              "username": "mary",
+              "password": "password"
+            },
+            "userDtoRequest": {
+              "username": "mary",
+              "password": "password"
+            }
+          }
+        }
+      ]
     }
   ]
 }

@@ -2,9 +2,11 @@ package com.brihaspathee.zeus.service.impl;
 
 import com.brihaspathee.zeus.domain.repository.RoleRepository;
 import com.brihaspathee.zeus.domain.repository.UserRepository;
+import com.brihaspathee.zeus.domain.security.Role;
 import com.brihaspathee.zeus.domain.security.User;
 import com.brihaspathee.zeus.exception.RoleNotFoundException;
 import com.brihaspathee.zeus.exception.UserNotFoundException;
+import com.brihaspathee.zeus.mapper.interfaces.AuthorityMapper;
 import com.brihaspathee.zeus.mapper.interfaces.UserMapper;
 import com.brihaspathee.zeus.service.interfaces.UserService;
 import com.brihaspathee.zeus.web.security.UserDto;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -34,16 +37,30 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
+    private final AuthorityMapper authorityMapper;
+
     private final RoleRepository roleRepository;
 
     @Override
     public UserDto saveUser(UserDto userDto) {
+        log.info("User Dto before Role Service:{}", userDto);
         if(userDto.getUserId() == null){
-            boolean rolesPresent = userDto.getRoles().stream().allMatch(roleDto -> roleRepository.existsById(roleDto.getRoleId()));
+            userDto.getRoles().forEach(roleDto -> {
+                Optional<Role> optionalRole = roleRepository.findRoleByRoleName(roleDto.getRoleName());
+                if(optionalRole.isEmpty()){
+                    throw new RoleNotFoundException("Role with role name " + roleDto.getRoleName() + " is not found");
+                }else {
+                    Role role = optionalRole.get();
+                    roleDto.setRoleId(role.getRoleId());
+                    roleDto.setAuthorities(authorityMapper.authoritiesToAuthorityDtos(role.getAuthorities()));
+                }
+            });
+            /*boolean rolesPresent = userDto.getRoles().stream().allMatch(roleDto -> roleRepository.existsById(roleDto.getRoleId()));
             if(!rolesPresent){
                 throw new RoleNotFoundException("One or more roles assigned to the user not found");
-            }
+            }*/
         }
+        log.info("User Dto after Role Service:{}", userDto);
         User user = userMapper.userDtoToUser(userDto);
         user = userRepository.save(user);
         return userMapper.userToUserDto(user);
