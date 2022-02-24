@@ -35,7 +35,7 @@ workflows:
   # For more details on extending your workflow, see the configuration docs: https://circleci.com/docs/2.0/configuration-reference/#workflows
   build:
     jobs:
-      - build:
+      - build-and-test:
           post-steps:
             - jira/notify
   sample:
