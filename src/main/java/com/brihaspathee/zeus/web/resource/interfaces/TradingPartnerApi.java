@@ -175,4 +175,36 @@ public interface TradingPartnerApi {
     @TradingPartnerReadPermission
     @GetMapping("/{tradingPartnerId}")
     ResponseEntity<ZeusApiResponse<TradingPartnerDto>> getTradingPartnerById(@PathVariable("tradingPartnerId") String tradingPartnerId);
+
+    /**
+     *
+     * @param senderId
+     * @param receiverId
+     * @return
+     */
+    @Operation(
+            method = "GET",
+            description = "Get the trading partner by sender and receiver id",
+            tags = {"trading-partner"}
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successfully retrieved the trading partner",
+                            content = {
+                                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = TradingPartnerDto.class))
+                            }
+                    ),
+                    @ApiResponse(responseCode = "404",
+                            description = "Not Found",
+                            content = {
+                                    @Content(mediaType = "application/json",schema = @Schema(implementation = ApiExceptionList.class))
+                            }),
+            }
+    )
+    @TradingPartnerReadPermission
+    @GetMapping("/{senderId}/{receiverId}")
+    ResponseEntity<ZeusApiResponse<TradingPartnerDto>> getTradingPartnerBySenderAndReceiver(@PathVariable("senderId") String senderId,
+                                                                             @PathVariable("receiverId") String receiverId);
 }

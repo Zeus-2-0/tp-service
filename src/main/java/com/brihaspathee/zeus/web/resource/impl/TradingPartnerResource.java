@@ -119,6 +119,19 @@ public class TradingPartnerResource implements TradingPartnerApi {
         return ResponseEntity.ok(apiResponse);
     }
 
+    @Override
+    public ResponseEntity<ZeusApiResponse<TradingPartnerDto>> getTradingPartnerBySenderAndReceiver(String senderId, String receiverId) {
+        TradingPartnerDto tradingPartnerDto = tradingPartnerService.getTradingPartnerBySenderAndReceiverId(senderId, receiverId);
+        ZeusApiResponse<TradingPartnerDto> apiResponse = ZeusApiResponse.<TradingPartnerDto>builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.OK)
+                .reason(ApiResponseConstants.SUCCESS_REASON)
+                .message(ApiResponseConstants.SUCCESS)
+                .response(tradingPartnerDto)
+                .build();
+        return ResponseEntity.ok(apiResponse);
+    }
+
     private ZeusApiResponse<TradingPartnerDto> saveTradingPartner(TradingPartnerDto tradingPartnerDto){
         TradingPartnerDto savedTP = tradingPartnerService.savingTradingPartner(tradingPartnerDto);
         HttpHeaders httpHeaders = new HttpHeaders();
