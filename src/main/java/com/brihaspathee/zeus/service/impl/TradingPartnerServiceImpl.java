@@ -86,7 +86,9 @@ public class TradingPartnerServiceImpl implements TradingPartnerService {
     @Override
     public TradingPartnerDto getTradingPartnerBySenderAndReceiverId(String senderId, String receiverId) {
         Optional<TradingPartner> optionalTradingPartner = tradingPartnerRepository.findTradingPartnerBySenderIdAndReceiverId(senderId,receiverId);
-        return getTradingPartnerDto(optionalTradingPartner);
+        TradingPartnerDto tradingPartnerDto =  getTradingPartnerDto(optionalTradingPartner);
+        log.info("Trading partner Dto:{}", tradingPartnerDto);
+        return tradingPartnerDto;
     }
 
     private TradingPartnerDto getTradingPartnerDto(Optional<TradingPartner> optionalTradingPartner) {
@@ -94,6 +96,7 @@ public class TradingPartnerServiceImpl implements TradingPartnerService {
             throw new TradingPartnerNotFoundException("Trading partner not found");
         }
         TradingPartner tradingPartner = optionalTradingPartner.get();
+        log.info("Trading Partner entity:{}", tradingPartner);
         return tradingPartnerMapper.tradingPartnerToTradingPartnerDto(tradingPartner);
     }
 
