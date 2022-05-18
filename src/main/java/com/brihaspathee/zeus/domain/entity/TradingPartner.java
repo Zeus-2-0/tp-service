@@ -1,10 +1,12 @@
 package com.brihaspathee.zeus.domain.entity;
 
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,6 +22,7 @@ import java.util.UUID;
  * Package Name: com.zeus.domain.entity
  * To change this template use File | Settings | File and Code Template
  */
+@Slf4j
 @Entity
 @Getter
 @Setter
@@ -68,6 +71,7 @@ public class TradingPartner {
     @Column(name = "updated_date", nullable = true)
     private LocalDateTime updatedDate;
 
+
     @Override
     public String toString() {
         return "TradingPartner{" +
@@ -97,4 +101,5 @@ public class TradingPartner {
     public int hashCode() {
         return Objects.hash(tradingPartnerSK);
     }
+
 }
