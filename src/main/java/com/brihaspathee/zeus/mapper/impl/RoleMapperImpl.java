@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,6 +36,8 @@ public class RoleMapperImpl implements RoleMapper {
         Role role = Role.builder()
                 .roleId(roleDto.getRoleId())
                 .roleName(roleDto.getRoleName())
+                .createdDate(LocalDateTime.now())
+                .updatedDate(LocalDateTime.now())
                 .build();
         if(roleDto.getAuthorities() != null &&
             !roleDto.getAuthorities().isEmpty()){

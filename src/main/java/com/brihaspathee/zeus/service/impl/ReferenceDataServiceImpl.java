@@ -41,7 +41,7 @@ public class ReferenceDataServiceImpl implements ReferenceDataService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity httpEntity = new HttpEntity(internalRefDataRequestList, headers);
-        ZeusApiResponse apiResponse = restTemplate.postForObject(refDataHost+"internal/refdata/list",httpEntity, ZeusApiResponse.class);
+        ZeusApiResponse apiResponse = restTemplate.postForObject(refDataHost+"ref-data/internal/list",httpEntity, ZeusApiResponse.class);
         log.info("API Response:{}", apiResponse);
         if (apiResponse.getMessage().equals("Success")){
             InternalRefDataResponseList responseList = objectMapper.convertValue(apiResponse.getResponse(), InternalRefDataResponseList.class);
