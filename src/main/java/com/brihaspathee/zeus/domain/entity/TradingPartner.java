@@ -32,6 +32,9 @@ import java.util.UUID;
 @Table(name = "trading_partner_detail")
 public class TradingPartner {
 
+    /**
+     * Primary key of the table
+     */
     @Id
     @GeneratedValue(generator = "UUID")
     @Type(type = "uuid-char")
@@ -39,34 +42,70 @@ public class TradingPartner {
     @Column(name = "trading_partner_sk", length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     private UUID tradingPartnerSK;
 
+    /**
+     * The unique id of the trading partner
+     */
     @Column(name = "trading_partner_id", nullable = false, length = 100)
     private String tradingPartnerId;
 
+    /**
+     * Name of the trading partner
+     */
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    /**
+     * Description of the trading partner
+     */
     @Column(name = "description", nullable = true, length = 100)
     private String description;
 
+    /**
+     * Sender id associated with the trading partner
+     */
     @Column(name = "sender_id", nullable = false, length = 100)
     private String senderId;
 
+    /**
+     * Receiver id associated with the trading partner
+     */
     @Column(name = "receiver_id", nullable = false, length = 100)
     private String receiverId;
 
+    /**
+     * The line of business associated with the trading partner
+     */
     @Column(name = "line_of_business_type_code", nullable = false, length = 10)
     private String lineOfBusinessTypeCode;
 
+    /**
+     * The business unit associated with the trading partner
+     */
+    @Column(name = "business_unit_type_code", nullable = false, length = 10)
+    private String businessUnitTypeCode;
+
+    /**
+     * The state type code associated with the trading partner
+     */
     @Column(name = "state_type_code", nullable = false, length = 10)
     private String stateTypeCode;
 
+    /**
+     * Marketplace type code associated with the trading partner
+     */
     @Column(name = "marketplace_type_code", nullable = false, length = 10)
     private String marketplaceTypeCode;
 
+    /**
+     * Date when the record was created
+     */
     @CreationTimestamp
     @Column(name = "created_date", nullable = true)
     private LocalDateTime createdDate;
 
+    /**
+     * Date when the record was updated
+     */
     @UpdateTimestamp
     @Column(name = "updated_date", nullable = true)
     private LocalDateTime updatedDate;

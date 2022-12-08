@@ -32,6 +32,7 @@ public class TradingPartnerMapperImpl implements TradingPartnerMapper {
                 .senderId(tradingPartner.getSenderId())
                 .receiverId(tradingPartner.getReceiverId())
                 .lineOfBusinessTypeCode(tradingPartner.getLineOfBusinessTypeCode())
+                .businessUnitTypeCode(tradingPartner.getBusinessUnitTypeCode())
                 .marketplaceTypeCode(tradingPartner.getMarketplaceTypeCode())
                 .stateTypeCode(tradingPartner.getStateTypeCode())
                 .build();
@@ -52,6 +53,7 @@ public class TradingPartnerMapperImpl implements TradingPartnerMapper {
                 .senderId(tradingPartnerDto.getSenderId())
                 .receiverId(tradingPartnerDto.getReceiverId())
                 .lineOfBusinessTypeCode(tradingPartnerDto.getLineOfBusinessTypeCode())
+                .businessUnitTypeCode(tradingPartnerDto.getBusinessUnitTypeCode())
                 .marketplaceTypeCode(tradingPartnerDto.getMarketplaceTypeCode())
                 .stateTypeCode(tradingPartnerDto.getStateTypeCode())
                 .build();
