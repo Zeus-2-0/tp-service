@@ -1,5 +1,5 @@
 drop table if exists `tpdb`.`trading_partner_detail`;
-CREATE TABLE IF NOT EXISTS `tbdb`.`trading_partner_detail` (
+CREATE TABLE IF NOT EXISTS `tpdb`.`trading_partner_detail` (
     `trading_partner_sk` VARCHAR(36) NOT NULL COMMENT 'UUID will be the primary key',
     `trading_partner_id` VARCHAR(45) NOT NULL COMMENT 'The id of the trading partner that is shared externally',
     `name` VARCHAR(45) NULL COMMENT 'Name of the trading partner',
