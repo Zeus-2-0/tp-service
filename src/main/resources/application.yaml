@@ -21,6 +21,7 @@ spring:
   flyway:
     user: tpadmin
     password: password
+    clean-disabled: false
   profiles:
     active: local, clean
 logging:

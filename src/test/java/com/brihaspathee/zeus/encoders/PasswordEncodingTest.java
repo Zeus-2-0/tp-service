@@ -33,9 +33,9 @@ public class PasswordEncodingTest {
         log.info(bCryptPasswordEncoder.encode(PASSWORD));
     }
 
-    @Test
-    void hashingSCryptExample(){
-        Pbkdf2PasswordEncoder pbkdf2PasswordEncoder = new Pbkdf2PasswordEncoder();
-        log.info(pbkdf2PasswordEncoder.encode(PASSWORD));
-    }
+//    @Test
+//    void hashingSCryptExample(){
+//        Pbkdf2PasswordEncoder pbkdf2PasswordEncoder = new Pbkdf2PasswordEncoder();
+//        log.info(pbkdf2PasswordEncoder.encode(PASSWORD));
+//    }
 }

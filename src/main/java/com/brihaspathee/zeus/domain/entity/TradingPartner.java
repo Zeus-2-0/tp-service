@@ -1,14 +1,14 @@
 package com.brihaspathee.zeus.domain.entity;
 
+import jakarta.persistence.Table;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -37,7 +37,7 @@ public class TradingPartner {
      */
     @Id
     @GeneratedValue(generator = "UUID")
-    @Type(type = "uuid-char")
+    @JdbcTypeCode(Types.LONGVARCHAR)
     @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "trading_partner_sk", length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     private UUID tradingPartnerSK;
