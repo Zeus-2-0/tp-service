@@ -1,16 +1,17 @@
 package com.brihaspathee.zeus.domain.security;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
+import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Objects;
@@ -38,7 +39,7 @@ public class User implements UserDetails, CredentialsContainer {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @Type(type = "uuid-char")
+    @JdbcTypeCode(Types.LONGVARCHAR)
     @GenericGenerator(name="UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "user_id", length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     private UUID userId;
