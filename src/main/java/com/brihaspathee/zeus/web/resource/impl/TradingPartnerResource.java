@@ -89,7 +89,7 @@ public class TradingPartnerResource implements TradingPartnerApi {
         jsonSchemaValidator.validateJSON(schemaObject,schemaAsStream,ApiResponseConstants.TRADING_PARTNER_API);
         //validateJSON(tradingPartnerDto);
 
-        ZeusApiResponse<TradingPartnerDto> apiResponse = saveTradingPartner(tradingPartnerDto);
+        ZeusApiResponse<TradingPartnerDto> apiResponse = saveTradingPartner(tradingPartnerDto, false);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Location", "/api/v1/tp/"+apiResponse.getResponse().getTradingPartnerSK());
         return new ResponseEntity<ZeusApiResponse<TradingPartnerDto>>(apiResponse, httpHeaders, HttpStatus.CREATED);
@@ -100,7 +100,7 @@ public class TradingPartnerResource implements TradingPartnerApi {
     @Override
     public ResponseEntity updateTradingPartner(TradingPartnerDto tradingPartnerDto, UUID tradingPartnerSK) {
         tradingPartnerDto.setTradingPartnerSK(tradingPartnerSK);
-        ZeusApiResponse<TradingPartnerDto> apiResponse = saveTradingPartner(tradingPartnerDto);
+        ZeusApiResponse<TradingPartnerDto> apiResponse = saveTradingPartner(tradingPartnerDto, true);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Location", "/api/v1/tp/"+apiResponse.getResponse().getTradingPartnerSK());
         return new ResponseEntity<ZeusApiResponse<TradingPartnerDto>>(apiResponse, httpHeaders, HttpStatus.OK);
@@ -132,7 +132,7 @@ public class TradingPartnerResource implements TradingPartnerApi {
         return ResponseEntity.ok(apiResponse);
     }
 
-    private ZeusApiResponse<TradingPartnerDto> saveTradingPartner(TradingPartnerDto tradingPartnerDto){
+    private ZeusApiResponse<TradingPartnerDto> saveTradingPartner(TradingPartnerDto tradingPartnerDto, boolean isUpdate){
         TradingPartnerDto savedTP = tradingPartnerService.savingTradingPartner(tradingPartnerDto);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Location", "/api/v1/tp/"+savedTP.getTradingPartnerSK());

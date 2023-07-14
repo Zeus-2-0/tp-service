@@ -1,0 +1,1 @@
+<diagram version="1" name="trading-partner-service.erd" time="202306291419"><entities><data-source id="mysql8-1881f18c932-e9dfb1bb60b20a6"><entity id="1" name="trading_partner_detail" fq-name="tpdb.trading_partner_detail" order="0" x="321" y="154"><path name="tpdb"/></entity></data-source></entities><relations/></diagram>

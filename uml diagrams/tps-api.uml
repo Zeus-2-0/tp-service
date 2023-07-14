@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/balaji/Documents/mac-mini/Projects.nosync/Zeus/tp-service/src/main/java/com/brihaspathee/zeus/web/resource</OriginalElement>
+  <nodes>
+    <node x="-283.0" y="840.0">com.brihaspathee.zeus.web.resource.interfaces.UserApi</node>
+    <node x="201.0" y="192.0">com.brihaspathee.zeus.web.resource.interfaces.TradingPartnerApi</node>
+    <node x="275.0" y="620.0">com.brihaspathee.zeus.web.resource.interfaces.AuthorityApi</node>
+    <node x="-378.5" y="240.0">com.brihaspathee.zeus.web.resource.impl.RoleResource</node>
+    <node x="-323.0" y="640.0">com.brihaspathee.zeus.web.resource.impl.UserResource</node>
+    <node x="161.0" y="-152.0">com.brihaspathee.zeus.web.resource.impl.TradingPartnerResource</node>
+    <node x="-338.5" y="440.0">com.brihaspathee.zeus.web.resource.interfaces.RoleApi</node>
+    <node x="235.0" y="420.0">com.brihaspathee.zeus.web.resource.impl.AuthorityResource</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.brihaspathee.zeus.web.resource.impl.AuthorityResource" target="com.brihaspathee.zeus.web.resource.interfaces.AuthorityApi" relationship="REALIZATION">
+      <point x="40.0" y="80.0" />
+      <point x="0.0" y="-55.5" />
+    </edge>
+    <edge source="com.brihaspathee.zeus.web.resource.impl.UserResource" target="com.brihaspathee.zeus.web.resource.interfaces.UserApi" relationship="REALIZATION">
+      <point x="40.0" y="80.0" />
+      <point x="0.0" y="-55.5" />
+    </edge>
+    <edge source="com.brihaspathee.zeus.web.resource.impl.RoleResource" target="com.brihaspathee.zeus.web.resource.interfaces.RoleApi" relationship="REALIZATION">
+      <point x="40.0" y="80.0" />
+      <point x="0.0" y="-55.5" />
+    </edge>
+    <edge source="com.brihaspathee.zeus.web.resource.impl.TradingPartnerResource" target="com.brihaspathee.zeus.web.resource.interfaces.TradingPartnerApi" relationship="REALIZATION">
+      <point x="40.0" y="152.0" />
+      <point x="0.0" y="-91.5" />
+    </edge>
+  </edges>
+  <settings layout="Compact" zoom="0.8165627782724845" showDependencies="false" x="290.0" y="399.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
